@@ -37,7 +37,7 @@ cacheSolve <- function(x, ...) {
     }
 
     else {
-        x$setinv(solve(x$get()))
+        x$setinv(solve(x$get(), ...))
         return(x$getinv())
     }
 }
