@@ -3,15 +3,15 @@
 ## changed or compute the inverse the store it if the inverse is not present
 ## in cache or the cache has become dirty.
 
-## This function contains the associated list of associated getters and
-## setters.
+## This function returns the associated list of associated getters and
+## setters for a matrix.
 
 makeCacheMatrix <- function(x = matrix()) {
-    inv.x <- matrix()
+    inv.x <- NULL
 
     set <- function(y) {
         x <<- y
-        inv.x <<- matrix()
+        inv.x <<- NULL
     }
 
     get <- function() x
@@ -24,8 +24,20 @@ makeCacheMatrix <- function(x = matrix()) {
 }
 
 
-## Write a short comment describing this function
+## Return inverse of x.
+## * Calculate it if it is absent in cache.
+## * Retrieve from cache if available.
 
 cacheSolve <- function(x, ...) {
-        ## Return a matrix that is the inverse of 'x'
+    inv.x <- x$getinv()
+
+    if(!is.null(inv.x)) {
+        message("Getting cached matrix inverse")
+        return(inv.x)
+    }
+
+    else {
+        x$setinv(solve(x$get()))
+        return(x$getinv())
+    }
 }
